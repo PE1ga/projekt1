@@ -1,0 +1,136 @@
+{% if user.is_authenticated %}
+    {{ user }}    
+    {% if user.username == "Peter" %}
+        <style>
+            table, tr, td, th {border: 2px solid rgb(236, 221, 7); text-align:center; font-size:50px;}
+            h1 {font-size: 50;}
+            h2 {font-size: 40;}
+            a {color: solid rgb(39, 3, 239); font-size:40px}
+            a:hover {color: rgb(243, 4, 68);}
+            a:visited {color: brown;}
+
+            button {
+                border: 2px;
+                background-color: rgb(130, 127, 127);
+                color: rgb(243, 243, 7);
+                padding: 20px 45px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 25px;
+                margin: 8px 8px;
+                cursor: pointer;
+                
+                }
+        
+        </style>
+
+        <!-- OHRANJA POZICIJO NA STRANI PO REFRESHU -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var sep = '\uE000'; // an unusual char: unicode 'Private Use, First'
+
+            window.addEventListener('pagehide', function(e) {
+                window.name += sep + window.pageXOffset + sep + window.pageYOffset;
+            });
+
+            if(window.name && window.name.indexOf(sep) > -1)
+            {
+                var parts = window.name.split(sep);
+                if(parts.length >= 3)
+                {
+                    window.name = parts[0];
+                    window.scrollTo(parseFloat(parts[parts.length - 2]), parseFloat(parts[parts.length - 1]));
+                }
+            }
+        });
+        </script>
+
+
+
+        <h1> ODHODI, MENJAVE, POSPRAVLJANJE</h1> 
+
+        <strong><a style="color: rgb(255, 0, 30);">Še: {{ STSOB }}</a></strong>
+
+        <p>
+            <a><button style="background-color: rgb(28, 4, 248);" type="submit" onclick="location.href='pospravljanje_prihodi/'" name='mybtn1'>PRIHODI</button></a>
+            <!-- <a href="pospravljanje_prihodi/">PRIHODI</a> -->
+        </p>
+
+        <table>
+            <th>Soba</th>
+            <th>Akcija</th>
+            <th>Za oseb</th>
+            <th>Status</th>
+            <th>Potrdi</th>
+            <th>Reset</th>
+
+            {% for x in SobeSeznam %}
+            <tr style="height: 80px">
+                <!-- Številka sobe - -obarvaj jo glede na to, v katerem nadstropju se nahaja -->
+                {% if x.Soba >= 10 and x.Soba < 20 %}
+                    <td><strong><p style="color: rgb(100, 16, 115);">{{ x.Soba }}</p> </strong></td>
+                {% elif x.Soba >= 20 and x.Soba < 30 %}
+                    <td><strong><p style="color: rgb(45, 227, 25);">{{ x.Soba }}</p></strong> </td>
+                {% elif x.Soba >= 30 and x.Soba < 40 %}
+                    <td><strong><p style="color: rgb(22, 15, 231);">{{ x.Soba }}</p></strong> </td>
+                {% elif x.Soba >= 40 and x.Soba < 50 %}
+                    <td><strong><p style="color: rgb(191, 9, 9);">{{ x.Soba }}</p></strong> </td>
+                {% elif x.Soba >= 50 and x.Soba < 60 %}
+                    <td><strong><p style="color: rgb(18, 17, 17);">{{ x.Soba }}</p></strong> </td>
+
+                
+            {% else %}
+                <td>{{ x.Soba }}</td>
+            {% endif %}
+            
+            
+            <!-- menjava, prihod, odhod -->
+            {% if x.Akcija.lower == "menjava" %}
+            
+                <td style="background-color: rgb(255, 0, 0);">{{ x.Akcija }} </td>
+            {% else %}
+                <td> {{ x.Akcija }} </td>
+            {% endif %}
+            
+                <!-- če je odhod>> povej za koliko oseb pripravi sobo -->
+            {% if x.Za_Oseb == 0 %}  <!-- če je 0, potem naj bo celica prazna -->
+                <td> </td>
+            {% else %}
+                <td>{{ x.Za_Oseb }} </td>
+            {% endif %}
+            
+            
+            
+            <!-- status - če je ok, obarvaj celico z zeleno -->
+            {% if x.Status == "OK" %}
+                <td style="background-color: rgb(11, 242, 38);">{{ x.Status }} </td>
+            {% else %}
+                <td>{{ x.Status }} </td>
+            {% endif %}
+            
+            <!-- linki OK in reset - aktivirajo viewse za spremmebo statusa v OK, oz izbriše OK iz statusa -->
+            <td><button type="submit" onclick="location.href='confirm/{{ x.id }}'" name='mybtn1'>OK</button></td>
+            <td><button type="submit" onclick="location.href='reset/{{ x.id }}'" name='mybtn2'>Reset</button></td>
+            
+            <!--<td> <a href="confirm/{{ x.id }}">OK</a>  </td> 
+            <td> <a href="reset/{{ x.id }}">Reset</a></td> -->
+        </tr>
+        {% endfor %} 
+        </table>
+
+        <p>
+            <a href="/">Domov</a>
+        </p>
+
+    {% else %}
+    <h2>Dostop zavrnjen. Nimaš ustreznih pravic za ogled te strani!</h2>
+
+    {% endif %}
+
+{% else %}
+<h1>Ne bo šlo. Moraš se logirati!</h1>
+<a href="{% url 'login' %}">Logiraj se tu!</a>
+
+
+{% endif %}

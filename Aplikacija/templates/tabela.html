@@ -1,0 +1,41 @@
+<h1>ČLANI</h1>
+<style>
+    table, tr, td {
+        border: 2px solid rgb(236, 221, 7);
+    }
+    a {
+        color: solid rgb(39, 3, 239);
+    }
+    a:hover {
+        color: rgb(243, 4, 68);
+    }
+    a:visited {
+        color: brown;
+
+    }
+    
+    td:1 {
+        color: green;
+    }
+ 
+</style>
+ 
+<table>
+    {% for x in MyMembers %}
+    <tr>
+        <td> <a href="update/{{ x.id }}"> posodobi</a>  </td>
+        <td>{{ x.id }} </td>
+        {% if x.firstname == "Peter" or x.firstname == "Primož" %}
+        <td style="border: 2px solid rgb(215, 11, 31)">{{ x.firstname }}</td>
+        {% else %}
+        <td>{{ x.firstname }} </td> 
+        {% endif %}
+        <td>{{ x.lastname }} </td>
+        <td> <a href="delete/{{ x.id }}">delete</a></td>
+    </tr>
+    {% endfor %} 
+</table>
+
+<p>
+    <a href="/">Domov</a>
+</p>

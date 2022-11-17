@@ -1,1 +1,46 @@
-<h1>To je test. Izdelal ga je {{ VstaviIme }}</h1>
+<style>
+    h1 {font-size:50px} 
+    h2 {font-size:40px} 
+    
+    a, p {color: solid rgb(39, 3, 239); font-size:40px}
+    a:hover {color: rgb(243, 4, 68);}
+    a:visited {color: brown;}
+ 
+</style>
+
+
+
+
+
+<h1>Hotel Gašperin</h1>
+
+{% if user.is_authenticated %}
+<h3>Prijavljen si kot {{ user }}</h3>
+<a href="{% url 'logout' %}">LOGOUT</a>
+{% else %}
+<a href="{% url 'login' %}">LOGIN 
+    {% if messages %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+{% endif %}</a>
+{% endif %}
+
+<p>
+    <a href="tabelaPrikaz/">Tabela Ime in Priimek</a>
+</p>
+
+<p>
+    <a href="seznam_gostov/">Seznam Gostov</a>
+</p>
+
+<p>
+    <a href="pospravljanje/">Pospravljanje</a>
+</p>
+
+
+
+
+<!--
+
+-->

@@ -1,0 +1,35 @@
+
+<h1>Login</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+
+    <form>
+        <div class="mb-3">
+          <label for="InputUsername" class="form-label">Username</label>
+          <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="InputPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password">
+        </div>
+        
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+
+
+    
+
+
+
+
+<p>
+    <a href="/">Domov</a>
+</p>

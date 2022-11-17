@@ -1,0 +1,45 @@
+
+{% if user.is_authenticated %}
+<h1>SEZNAM GOSTOV TEST</h1>
+<style>
+    table, tr, td {
+        border: 2px solid rgb(236, 221, 7);
+    }
+    a {
+        color: solid rgb(39, 3, 239);
+    }
+    a:hover {
+        color: rgb(243, 4, 68);
+    }
+    a:visited {
+        color: brown;
+
+    }
+ 
+</style>
+ 
+<table>
+    {% for x in GostiSeznam %}
+    <tr>
+        <td> <a href="update/{{ x.id }}"> posodobi</a>  </td>
+        <td>{{ x.id }} </td>
+        <td>{{ x.Ime }} </td>
+        <td>{{ x.Agencija }} </td>
+        <td>{{ x.Cena }} </td>
+        <td>{{ x.DatumOD }} </td>
+        <td>{{ x.DatumDO }} </td>
+        <td> <a href="delete/{{ x.id }}">delete</a></td>
+    </tr>
+    {% endfor %} 
+</table>
+
+<p>
+    <a href="/">Domov</a>
+</p>
+
+{% else %}
+<h1>Ne bo šlo. Moraš se logirati!</h1>
+<a href="{% url 'login' %}">Logiraj se tu!</a>
+
+
+{% endif %}

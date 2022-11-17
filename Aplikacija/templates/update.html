@@ -1,0 +1,26 @@
+<h1> POSODOBI VNOS </h1>
+
+<form action="updaterecord/{{ Gost.id }}" method="post">
+{% csrf_token %}
+
+Ime:<br>
+<input name="Ime" value="{{ Gost.Ime }}">
+<br><br>
+Agencija:<br>
+<input name="Agencija" value="{{ Gost.Agencija }}">
+<br><br>
+Cena:<br>
+<input name="Cena" value="{{ Gost.Cena }}">
+<br><br>
+Datum od:<br>
+<input name="DatumOD" value="{{ Gost.DatumOD }}">
+<br><br>
+Datum do:<br>
+<input name="DatumDO" value="{{ Gost.DatumDO }}">
+<br><br>
+
+
+<input type="submit" value="POSODOBI PODATKE O GOSTU">
+
+
+</form> 
